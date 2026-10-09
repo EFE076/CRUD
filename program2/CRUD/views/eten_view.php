@@ -1,53 +1,28 @@
-<?php
-?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eten</title>
+    <title>Eten overzicht</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Agenda</h1>
-
-<?php
-
-if ($aantalRijen > 0) { ?>
-
+<h1>Eten overzicht</h1>
+<?php if ($foutmelding !== ''): ?>
+    <p><?= htmlspecialchars($foutmelding, ENT_QUOTES, 'UTF-8') ?></p>
+<?php elseif ($aantalRijen > 0): ?>
     <ul>
-
-        <?php foreach ($result as $rij) { ?>
-
+        <?php foreach ($result as $rij): ?>
             <li>
-
-                <strong>Naam:</strong>
-                <?= $rij['naam'] ?><br>
-                <strong>Beschrijving:</strong>
-                <?= $rij['beschrijving'] ?><br>
-                <strong>Categorie:</strong>
-                <?= $rij['categorie'] ?><br>
-                <strong>Prijs:</strong>
-                <?= $rij['prijs'] ?><br>
-                <strong>calories:</strong>
-                <?= $rij['calories'] ?><br>
-                <strong>Beschikbaar:</strong>
-                <?= $rij['beschikbaar'] ?><br>
-                <a href="eten_bewerken.php?id=<?= $rij['ID'] ?>">Bewerken</a> |
-                <a href="eten_verwijderen.php?id=<?= $rij['ID'] ?>">Verwijderen</a>
-
+                <strong>Naam:</strong> <?= htmlspecialchars((string)$rij['naam'], ENT_QUOTES, 'UTF-8') ?><br>
+                <strong>Categorie:</strong> <?= htmlspecialchars((string)$rij['categorie'], ENT_QUOTES, 'UTF-8') ?><br>
+                <strong>Prijs:</strong> €<?= htmlspecialchars((string)$rij['prijs'], ENT_QUOTES, 'UTF-8') ?><br>
+                <a href="eten_detail.php?id=<?= urlencode((string)$rij['ID']) ?>">Details</a>
             </li>
-
-            <hr>
-
-        <?php } ?>
-
+        <?php endforeach; ?>
     </ul>
-
-<?php } else { ?>
-
-    <p>Geen resultaten gevonden</p>
-
-<?php } ?>
+<?php else: ?>
+    <p>Geen resultaten gevonden.</p>
+<?php endif; ?>
 </body>
 </html>
